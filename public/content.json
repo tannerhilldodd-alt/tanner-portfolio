@@ -1,0 +1,17 @@
+{
+  "name": "Tanner Hill Dodd",
+  "updated": "Nov 18, 2026",
+  "bio1": "Clemson University Creative Video.",
+  "bio2": "Fort Mill, SC.",
+  "email": "tanner.hill.dodd@gmail.com",
+  "socials": {
+    "instagram": "https://www.instagram.com/tannerfilmedthat/",
+    "tiktok": "https://www.tiktok.com/@tannerfilmedthat",
+    "linkedin": "https://www.linkedin.com/in/tanner-dodd-0245252a5/"
+  },
+  "clips": [
+    { "src": "media/clip-01.mp4", "poster": "media/clip-01.jpg" },
+    { "src": "media/clip-02.mp4", "poster": "media/clip-02.jpg" }
+  ],
+  "archive": []
+}

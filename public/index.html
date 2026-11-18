@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tanner Hill Dodd. Clemson University Creative Video. Fort Mill, SC.">
+<title>Tanner Hill Dodd</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap">
+<style>
+/* Layout: white page, quiet header, a stack of 2.39:1 clips, short about/contact. Archive view on #archive. Editor appears after unlocking with the lock in the footer. */
+:root{
+  --paper:#ffffff;
+  --ink:#111111;
+  --mute:#8a8a8a;
+  --line:#ececec;
+  --soft:#f5f5f4;
+  --warn:#b42318;
+  --ratio:2.39/1;
+  --gap:20px;
+  --f-body:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);margin:0;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.inner{max-width:1440px;margin:0 auto}
+.mono,.note{font-size:13px;color:var(--mute);line-height:1.4}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper)}
+header .inner{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-block:22px}
+.name{font-size:17px;font-weight:600;letter-spacing:-.01em}
+header nav{display:flex;gap:24px;font-size:13px;color:var(--mute)}
+header nav a:hover,header nav a[aria-current="page"]{color:var(--ink)}
+.updated{padding-block:2px 18px;font-size:12px;color:var(--mute);line-height:1.4}
+
+/* Clip stack */
+.clips{display:grid;gap:var(--gap);padding-block:0 var(--gap)}
+.clip{position:relative;width:100%;aspect-ratio:var(--ratio);max-width:100%;overflow:hidden;background:var(--soft);margin:0}
+.clip video,.clip img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.clip figcaption{position:absolute;left:14px;bottom:12px;color:#fff;opacity:0;transition:opacity .3s;font-size:12px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.clip:hover figcaption{opacity:1}
+.snd{all:unset;cursor:pointer;position:absolute;right:12px;bottom:12px;z-index:2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.38);backdrop-filter:blur(6px);color:#fff;transition:background .2s}
+.snd:hover{background:rgba(0,0,0,.6)}
+.snd:focus-visible{outline:1px solid #fff;outline-offset:2px}
+.snd svg,.ico{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.snd .on{display:none}
+.snd[aria-pressed="true"] .on{display:block}
+.snd[aria-pressed="true"] .off{display:none}
+
+/* Archive */
+.arch-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px 20px;padding-block:8px 22px}
+.arch-head h1{margin:0;font-size:clamp(22px,3vw,30px);font-weight:500;letter-spacing:-.01em}
+.clips.arch{grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr))}
+.item{display:grid;gap:8px;min-width:0}
+
+/* Page switch animation */
+.view-out{opacity:0;transform:translateY(-10px);transition:opacity .22s ease,transform .22s ease}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.view-in .clips>*,.view-in .arch-head{animation:rise .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0ms)}
+
+/* About + contact */
+.end{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;padding-block:88px 36px}
+.end p{margin:0;font-size:clamp(16px,4.2vw,24px);font-weight:400;line-height:1.3;letter-spacing:-.01em}
+.end p span{display:block;color:var(--mute)}
+.end p .l1{color:var(--ink);white-space:nowrap}
+.contact{display:grid;gap:6px;text-align:right;font-size:15px}
+.social{display:flex;flex-wrap:wrap;gap:18px;justify-content:flex-end}
+.contact a:hover{text-decoration:underline;text-underline-offset:4px}
+footer .inner{padding-block:18px 28px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid var(--line)}
+.lock{all:unset;cursor:pointer;color:#c4c4c4;display:grid;place-items:center;width:28px;height:28px;border-radius:50%}
+.lock:hover{color:var(--ink)}
+.lock .ico{width:14px;height:14px}
+
+/* ---------- Editor ---------- */
+.btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:13px;font-weight:500;padding:9px 14px;border-radius:999px;background:var(--ink);color:#fff;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--mute)}
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.45;cursor:default}
+.btn:focus-visible{outline:1px solid var(--ink);outline-offset:3px}
+dialog{border:0;border-radius:14px;padding:28px;width:min(440px,calc(100vw - 32px));box-shadow:0 20px 60px rgba(0,0,0,.18);color:var(--ink);background:var(--paper)}
+dialog::backdrop{background:rgba(255,255,255,.7);backdrop-filter:blur(6px)}
+dialog h2{margin:0 0 6px;font-size:20px;font-weight:500}
+dialog form{display:grid;gap:14px}
+.field{display:grid;gap:6px;font-size:13px;color:var(--mute)}
+.field input{border:1px solid var(--line);border-radius:8px;padding:11px 12px;background:var(--paper);width:100%}
+.field input:focus{outline:none;border-color:var(--ink)}
+.err{color:var(--warn);font-size:13px;margin:0}
+.row{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+#details{width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 40px)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.editing .clip{outline:1px dashed transparent}
+.tools{position:absolute;top:10px;right:10px;z-index:3;display:none;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.editing .tools{display:flex}
+.tools button{all:unset;cursor:pointer;font-size:12px;font-weight:500;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 1px 6px rgba(0,0,0,.15)}
+.tools button:hover{background:#fff}
+.tools button.danger{color:var(--warn)}
+.tools button:focus-visible{outline:1px solid #fff;outline-offset:2px}
+.add{display:none;width:100%;aspect-ratio:var(--ratio);max-width:100%;border:1.5px dashed #d6d6d6;border-radius:2px;place-items:center;text-align:center;color:var(--mute);font-size:14px;cursor:pointer;background:transparent}
+.add:hover{border-color:var(--mute);color:var(--ink)}
+.editing .add{display:grid}
+.add strong{display:block;color:var(--ink);font-weight:500;font-size:16px;margin-bottom:4px}
+.busy{position:absolute;inset:0;z-index:4;display:grid;place-items:center;background:rgba(255,255,255,.85);font-size:14px}
+.empty{display:none;color:var(--mute);font-size:14px;margin:0}
+.editing .empty{display:block}
+
+.bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:20;display:none;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 16px;box-shadow:0 10px 40px rgba(0,0,0,.12);max-width:calc(100vw - 24px)}
+.editing .bar{display:flex}
+.bar .state{font-size:13px;color:var(--mute);margin-right:4px}
+.bar .state.dirty{color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:21;background:var(--ink);color:#fff;font-size:13px;padding:9px 14px;border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+.demo{font-size:12px;color:var(--mute);text-align:center;margin:0}
+
+@media (max-width:640px){
+  :root{--gap:10px}
+  header .inner{padding-block:18px}
+  header nav{gap:16px}
+  .end{grid-template-columns:minmax(0,1fr)}
+  .contact{text-align:left}
+  .social{justify-content:flex-start}
+  .snd{right:8px;bottom:8px;width:28px;height:28px}
+  .snd svg{width:14px;height:14px}
+  .tools{top:6px;right:6px}
+  .tools button{padding:6px 9px;font-size:11px}
+  .grid2{grid-template-columns:1fr}
+  .bar{border-radius:16px;padding:10px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+
+<header class="gut"><div class="inner">
+  <a class="name" href="#" data-k="name">Tanner Hill Dodd</a>
+  <nav><a href="#" data-view="work">Work</a><a href="#archive" data-view="archive">Archive</a><a href="#about">Contact</a></nav>
+</div></header>
+
+<div class="gut"><div class="inner updated" id="updated">Last updated Nov 18, 2026</div></div>
+
+<main class="gut" id="work"><div class="inner clips" id="clips"></div></main>
+
+<main class="gut" id="archive" hidden><div class="inner">
+  <div class="arch-head"><h1>Archive</h1><span class="note">When a clip on the main page gets replaced, the old one moves here.</span></div>
+  <div class="clips arch" id="arch"></div>
+  <p class="empty" id="arch-empty">The archive is empty. Use “Archive” or “Replace” on a clip to send it here.</p>
+</div></main>
+
+<section id="about" class="gut"><div class="inner end">
+  <p><span class="l1" id="bio1">Clemson University Creative Video.</span><span id="bio2">Fort Mill, SC.</span></p>
+  <div class="contact">
+    <span style="user-select:all" id="email">tanner.hill.dodd@gmail.com</span>
+    <div class="social" id="social"></div>
+  </div>
+</div></section>
+<footer class="gut"><div class="inner">
+  <span class="note" id="copy">© 2026 Tanner Hill Dodd</span>
+  <button class="lock" id="lock" type="button" aria-label="Edit site">
+    <svg class="ico" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+  </button>
+</div></footer>
+
+<!-- Editor bar -->
+<div class="bar" id="bar" role="toolbar" aria-label="Editor">
+  <span class="state" id="state">Editing</span>
+  <button class="btn ghost" type="button" id="b-details">Site details</button>
+  <button class="btn ghost" type="button" id="b-date">Set date to today</button>
+  <button class="btn ghost" type="button" id="b-discard">Discard</button>
+  <button class="btn" type="button" id="b-save">Save changes</button>
+  <button class="btn ghost" type="button" id="b-out">Lock</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="picker" accept="video/mp4,video/quicktime,video/*" hidden>
+
+<dialog id="login">
+  <form id="login-form">
+    <div><h2>Edit site</h2><span class="note">Enter your password to make changes.</span></div>
+    <label class="field" for="pw">Password<input id="pw" type="password" autocomplete="current-password" required></label>
+    <p class="err" id="login-err" hidden></p>
+    <p class="demo" id="demo-note" hidden>Preview mode: any password opens the editor, and changes are not saved.</p>
+    <div class="row"><button class="btn ghost" type="button" id="login-cancel">Cancel</button><button class="btn" type="submit">Unlock</button></div>
+  </form>
+</dialog>
+
+<dialog id="details">
+  <form id="details-form">
+    <div><h2>Site details</h2><span class="note">Changes show on the page right away. Press Save changes to publish them.</span></div>
+    <label class="field" for="d-name">Name<input id="d-name"></label>
+    <label class="field" for="d-updated">Last updated<input id="d-updated" placeholder="Nov 18, 2026"></label>
+    <label class="field" for="d-bio1">Bio, first line<input id="d-bio1"></label>
+    <label class="field" for="d-bio2">Bio, second line<input id="d-bio2"></label>
+    <label class="field" for="d-email">Email<input id="d-email" type="email"></label>
+    <div class="grid2">
+      <label class="field" for="d-ig">Instagram link<input id="d-ig" type="url"></label>
+      <label class="field" for="d-tt">TikTok link<input id="d-tt" type="url"></label>
+    </div>
+    <label class="field" for="d-li">LinkedIn link<input id="d-li" type="url"></label>
+    <div class="row"><button class="btn" type="submit">Done</button></div>
+  </form>
+</dialog>
+
+<script>
+/* Starting content. On the live site this comes from the server and is edited through the lock in the footer. */
+const DEFAULT_CONTENT = {
+  name:"Tanner Hill Dodd",
+  updated:"Nov 18, 2026",
+  bio1:"Clemson University Creative Video.",
+  bio2:"Fort Mill, SC.",
+  email:"tanner.hill.dodd@gmail.com",
+  socials:{
+    instagram:"https://www.instagram.com/tannerfilmedthat/",
+    tiktok:"https://www.tiktok.com/@tannerfilmedthat",
+    linkedin:"https://www.linkedin.com/in/tanner-dodd-0245252a5/"
+  },
+  clips:[
+    {src:"media/clip-01.mp4", poster:"media/clip-01.jpg"},
+    {src:"media/clip-02.mp4", poster:"media/clip-02.jpg"}
+  ],
+  archive:[]
+};
+
+const $=id=>document.getElementById(id);
+const clone=o=>JSON.parse(JSON.stringify(o));
+let saved=clone(DEFAULT_CONTENT), content=clone(DEFAULT_CONTENT);
+let editing=false, live=false /* true when the site's server is reachable */;
+
+/* ---------- Rendering ---------- */
+const SND=`<button class="snd" type="button" aria-pressed="false" aria-label="Turn sound on">
+  <svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+  <svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>`;
+function clipEl(c,tools){
+  const f=document.createElement('figure');f.className='clip';
+  const v=document.createElement('video');
+  Object.assign(v,{src:c.src,muted:true,loop:true,playsInline:true,autoplay:true,preload:'metadata'});
+  v.setAttribute('muted','');v.setAttribute('playsinline','');
+  if(c.poster)v.poster=c.poster;
+  f.appendChild(v);
+  if(c.label){const cap=document.createElement('figcaption');cap.textContent=c.label;f.appendChild(cap);}
+  f.insertAdjacentHTML('beforeend',SND);
+  if(tools){const t=document.createElement('div');t.className='tools';t.innerHTML=tools;f.appendChild(t);}
+  return f;
+}
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target.querySelector('video');if(!v)return;
+  if(e.isIntersecting)v.play().catch(()=>{});
+  else{v.pause();const b=e.target.querySelector('.snd');if(b&&b.getAttribute('aria-pressed')==='true')setSound(b,false);}
+}),{threshold:.15}):null;
+
+function render(){
+  const c=content;
+  document.querySelector('.name').textContent=c.name;
+  $('copy').textContent=`© ${new Date().getFullYear()} ${c.name}`;
+  $('updated').textContent=c.updated?`Last updated ${c.updated}`:'';
+  $('updated').hidden=!c.updated;
+  $('bio1').textContent=c.bio1;$('bio2').textContent=c.bio2;
+  $('email').textContent=c.email;
+  const s=$('social');s.innerHTML='';
+  [['Instagram',c.socials.instagram],['TikTok',c.socials.tiktok],['LinkedIn',c.socials.linkedin]].forEach(([l,u])=>{
+    if(!u)return;const a=document.createElement('a');a.href=u;a.target='_blank';a.rel='noopener';a.textContent=l+' ↗';s.appendChild(a);
+  });
+
+  const w=$('clips');w.innerHTML='';
+  c.clips.forEach((clip,i)=>{
+    const tools=`${i>0?`<button data-act="up" data-i="${i}">Move up</button>`:''}${i<c.clips.length-1?`<button data-act="down" data-i="${i}">Move down</button>`:''}<button data-act="replace" data-i="${i}">Replace</button><button data-act="archive" data-i="${i}">Archive</button><button class="danger" data-act="delete" data-i="${i}">Delete</button>`;
+    w.appendChild(clipEl(clip,tools));
+  });
+  const add=document.createElement('button');add.type='button';add.className='add';add.dataset.act='add';
+  add.innerHTML='<span><strong>+ Add a clip</strong>MP4, 1920 × 804, a few seconds long</span>';
+  w.appendChild(add);
+
+  const a=$('arch');a.innerHTML='';
+  c.archive.forEach((clip,i)=>{
+    const d=document.createElement('div');d.className='item';
+    d.appendChild(clipEl(clip,`<button data-act="restore" data-i="${i}">Back to main page</button><button class="danger" data-act="adelete" data-i="${i}">Delete</button>`));
+    if(clip.archived){const n=document.createElement('span');n.className='note';n.textContent='On the main page until '+clip.archived;d.appendChild(n);}
+    a.appendChild(d);
+  });
+  $('arch-empty').hidden=c.archive.length>0;
+
+  document.querySelectorAll('main').forEach(m=>[...m.querySelectorAll('.arch-head,.clips>*')].forEach((el,i)=>el.style.setProperty('--d',Math.min(i,6)*80+'ms')));
+  if(io)document.querySelectorAll('.clip').forEach(el=>io.observe(el));
+  markDirty();
+}
+
+/* ---------- Sound ---------- */
+function setSound(btn,on){
+  btn.setAttribute('aria-pressed',on);btn.setAttribute('aria-label',on?'Turn sound off':'Turn sound on');
+  const v=btn.parentElement.querySelector('video');
+  if(v){v.muted=!on;if(on)v.play().catch(()=>{});}
+}
+
+/* ---------- Views ---------- */
+let firstRoute=true, swapTimer;
+function route(){
+  const a=location.hash==='#archive';
+  const show=$(a?'archive':'work'), hide=$(a?'work':'archive');
+  document.querySelectorAll('header nav a[data-view]').forEach(l=>{
+    if(l.dataset.view===(a?'archive':'work'))l.setAttribute('aria-current','page');else l.removeAttribute('aria-current');
+  });
+  clearTimeout(swapTimer);
+  const enter=()=>{
+    hide.hidden=true;hide.classList.remove('view-out','view-in');
+    show.hidden=false;show.classList.remove('view-out','view-in');
+    scrollTo({top:0,behavior:'instant'});
+    if(!firstRoute){void show.offsetWidth;show.classList.add('view-in');}
+    firstRoute=false;
+  };
+  if(firstRoute||hide.hidden){enter();return;}
+  hide.classList.add('view-out');
+  swapTimer=setTimeout(enter,230);
+}
+addEventListener('hashchange',route);
+
+/* ---------- Server ---------- */
+async function api(path,opts={}){
+  const r=await fetch(path,{credentials:'same-origin',...opts});
+  if(!r.ok){const t=await r.text().catch(()=>'');throw Object.assign(new Error(t||r.statusText),{status:r.status});}
+  const ct=r.headers.get('content-type')||'';
+  return ct.includes('json')?r.json():r.text();
+}
+async function boot(){
+  try{
+    const data=await api('/api/content');
+    if(data&&Array.isArray(data.clips)){saved=data;content=clone(data);live=true;}
+  }catch(e){live=false;}
+  render();route();
+  if(live){try{const me=await api('/api/me');if(me.authed)setEditing(true);}catch(e){}}
+}
+
+/* ---------- Editing ---------- */
+const toastEl=$('toast');let toastT;
+function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),2600);}
+function isDirty(){return JSON.stringify(content)!==JSON.stringify(saved);}
+function markDirty(){
+  const d=isDirty();const st=$('state');
+  st.textContent=d?'Unsaved changes':(live?'Editing':'Editing (preview)');st.classList.toggle('dirty',d);
+  $('b-save').disabled=!d;$('b-discard').disabled=!d;
+}
+function setEditing(on){
+  editing=on;document.body.classList.toggle('editing',on);
+  $('lock').setAttribute('aria-label',on?'Lock editor':'Edit site');
+  markDirty();
+}
+function monthYear(){return new Date().toLocaleDateString('en-US',{month:'short',year:'numeric'});}
+function today(){return new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+
+$('lock').onclick=()=>{
+  if(editing){lockUp();return;}
+  $('login-err').hidden=true;$('pw').value='';$('demo-note').hidden=live;
+  $('login').showModal();$('pw').focus();
+};
+$('login-cancel').onclick=()=>$('login').close();
+$('login-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!live){$('login').close();setEditing(true);toast('Preview mode: changes are not saved');return;}
+  try{
+    await api('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:$('pw').value})});
+    $('login').close();setEditing(true);toast('Unlocked');
+  }catch(err){$('login-err').textContent=err.status===401?'That password is not right.':'Could not reach the server. Try again.';$('login-err').hidden=false;}
+});
+async function lockUp(){
+  if(isDirty()){toast('Save or discard your changes first');return;}
+  if(live){try{await api('/api/logout',{method:'POST'});}catch(e){}}
+  setEditing(false);toast('Locked');
+}
+$('b-out').onclick=lockUp;
+$('b-discard').onclick=()=>{content=clone(saved);render();toast('Changes discarded');};
+$('b-date').onclick=()=>{content.updated=today();render();};
+$('b-save').onclick=async()=>{
+  if(!live){saved=clone(content);markDirty();toast('Preview mode: nothing was saved to the live site');return;}
+  const b=$('b-save');b.disabled=true;b.textContent='Saving…';
+  try{
+    await api('/api/content',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(content)});
+    saved=clone(content);toast('Saved. The site is updated');
+  }catch(err){toast(err.status===401?'Your session ended. Unlock again to save':'Saving failed. Try again');}
+  b.textContent='Save changes';markDirty();
+};
+
+/* Site details */
+const DF={name:'d-name',updated:'d-updated',bio1:'d-bio1',bio2:'d-bio2',email:'d-email'};
+$('b-details').onclick=()=>{
+  for(const k in DF)$(DF[k]).value=content[k]||'';
+  $('d-ig').value=content.socials.instagram||'';$('d-tt').value=content.socials.tiktok||'';$('d-li').value=content.socials.linkedin||'';
+  $('details').showModal();
+};
+$('details-form').addEventListener('submit',e=>{
+  e.preventDefault();
+  for(const k in DF)content[k]=$(DF[k]).value.trim();
+  content.socials={instagram:$('d-ig').value.trim(),tiktok:$('d-tt').value.trim(),linkedin:$('d-li').value.trim()};
+  $('details').close();render();
+});
+
+/* Clip actions */
+let pickFor=null;
+document.addEventListener('click',e=>{
+  const snd=e.target.closest('.snd');
+  if(snd){const on=snd.getAttribute('aria-pressed')!=='true';document.querySelectorAll('.snd[aria-pressed="true"]').forEach(b=>{if(b!==snd)setSound(b,false);});setSound(snd,on);return;}
+  const t=e.target.closest('[data-act]');if(!t||!editing)return;
+  const i=+t.dataset.i, C=content.clips, A=content.archive;
+  switch(t.dataset.act){
+    case 'up':[C[i-1],C[i]]=[C[i],C[i-1]];break;
+    case 'down':[C[i+1],C[i]]=[C[i],C[i+1]];break;
+    case 'archive':A.unshift({...C[i],archived:monthYear()});C.splice(i,1);toast('Moved to the archive');break;
+    case 'delete':
+      if(t.dataset.confirm!=='1'){t.dataset.confirm='1';t.textContent='Tap again to delete';setTimeout(()=>{t.dataset.confirm='';t.textContent='Delete';},3000);return;}
+      C.splice(i,1);break;
+    case 'restore':{const {archived,...rest}=A[i];C.push(rest);A.splice(i,1);toast('Back on the main page');break;}
+    case 'adelete':
+      if(t.dataset.confirm!=='1'){t.dataset.confirm='1';t.textContent='Tap again to delete';setTimeout(()=>{t.dataset.confirm='';t.textContent='Delete';},3000);return;}
+      A.splice(i,1);break;
+    case 'replace':pickFor={mode:'replace',i,fig:t.closest('.clip')};$('picker').value='';$('picker').click();return;
+    case 'add':pickFor={mode:'add',fig:t};$('picker').value='';$('picker').click();return;
+  }
+  render();
+});
+
+/* Grab a still from the video to use as its poster */
+function posterFrom(file){
+  return new Promise(res=>{
+    const v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='auto';
+    const url=URL.createObjectURL(file);v.src=url;
+    const done=b=>{URL.revokeObjectURL(url);res(b);};
+    v.onloadeddata=()=>{v.currentTime=Math.min(1,(v.duration||2)/3);};
+    v.onseeked=()=>{
+      const w=Math.min(1920,v.videoWidth||1920),h=Math.round(w*(v.videoHeight||804)/(v.videoWidth||1920));
+      const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+      try{cv.getContext('2d').drawImage(v,0,0,w,h);cv.toBlob(done,'image/jpeg',.82);}catch(e){done(null);}
+    };
+    v.onerror=()=>done(null);setTimeout(()=>done(null),8000);
+  });
+}
+async function upload(blob,name){
+  const r=await api('/api/upload?name='+encodeURIComponent(name),{method:'PUT',headers:{'content-type':blob.type||'application/octet-stream'},body:blob});
+  return r.url;
+}
+$('picker').addEventListener('change',async()=>{
+  const file=$('picker').files[0];if(!file||!pickFor)return;
+  const job=pickFor;pickFor=null;
+  if(file.size>95*1024*1024){toast('That file is over 95 MB. Export it smaller and try again');return;}
+  const host=job.mode==='replace'?job.fig:job.fig;
+  const busy=document.createElement('div');busy.className='busy';busy.textContent='Uploading…';
+  if(job.mode==='replace')host.appendChild(busy);else host.innerHTML='<span>Uploading…</span>';
+  try{
+    let src,poster=null;
+    const pb=await posterFrom(file);
+    if(live){
+      src=await upload(file,file.name);
+      if(pb)poster=await upload(pb,file.name.replace(/\.[^.]+$/,'')+'.jpg');
+    }else{
+      src=URL.createObjectURL(file);if(pb)poster=URL.createObjectURL(pb);
+    }
+    const clip={src};if(poster)clip.poster=poster;
+    if(job.mode==='replace'){
+      const old=content.clips[job.i];content.archive.unshift({...old,archived:monthYear()});content.clips[job.i]=clip;
+      toast('Replaced. The old clip moved to the archive');
+    }else{content.clips.push(clip);toast('Clip added');}
+    content.updated=today();
+    render();
+  }catch(err){toast(err.status===401?'Your session ended. Unlock again':'Upload failed. Try again');render();}
+});
+
+addEventListener('beforeunload',e=>{if(editing&&isDirty()){e.preventDefault();e.returnValue='';}});
+boot();
+</script>
+</body>
+</html>
