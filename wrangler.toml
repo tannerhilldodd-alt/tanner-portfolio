@@ -1,6 +1,10 @@
-name = "tanner-hill-dodd"
-pages_build_output_dir = "public"
+name = "tanner-portfolio"
+main = "src/worker.js"
 compatibility_date = "2024-09-23"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
 
 [[r2_buckets]]
 binding = "BUCKET"

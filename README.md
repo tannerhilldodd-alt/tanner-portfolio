@@ -1,29 +1,21 @@
 # Tanner Hill Dodd portfolio
 
-A static page on Cloudflare Pages, plus a few small server functions for the password-locked editor.
+A Cloudflare Worker that serves the static site from `public/` and runs the password-locked editor's API.
 
 ## How it fits together
 - `public/index.html` is the site. It loads its content from `/api/content`.
 - `public/content.json` is the starting content, used until the first save.
 - `public/media/` holds the first clips. Clips added through the editor go to Cloudflare R2.
-- `functions/api/*` handles login, saving content and uploads. `functions/files/*` streams uploaded clips.
-- `lib/auth.js` checks the password and signs the login cookie, which lasts 30 days.
-- `index.html` at the top level is only the Claude preview copy. Visitors never see it.
+- `src/worker.js` routes `/api/*` and `/files/*` and serves everything else from `public/`.
+- `src/api/*` handles login, saving content and uploads. `src/files.js` streams uploaded clips from R2.
+- `src/auth.js` checks the password and signs the login cookie, which lasts 30 days.
 
 ## One-time setup on Cloudflare
-1. Create a free Cloudflare account.
-2. Go to R2 and create a bucket named `tanner-hill-dodd-media`. The free tier covers 10 GB.
-3. Go to Workers & Pages, then Create, then Pages, then Connect to Git, and pick this repository.
-   - Build command: leave it empty.
-   - Build output directory: `public`.
-4. In the Pages project, open Settings, then Bindings, and add an R2 bucket:
-   - Variable name: `BUCKET`
-   - Bucket: `tanner-hill-dodd-media`
-5. In Settings, open Variables and secrets and add a **Secret**:
-   - Name: `ADMIN_PASSWORD`
-   - Value: your password
-   Only you know it, and it never appears in the code.
-6. Redeploy once, from Deployments, using Retry deployment.
+1. Create an R2 bucket named `tanner-hill-dodd-media`.
+2. In Workers & Pages, create a Worker from this GitHub repository. The Worker is named `tanner-portfolio`, and its deploy command is the default `npx wrangler deploy`.
+   `wrangler.toml` already binds the bucket as `BUCKET` and serves `public/`.
+3. Under the Worker's Settings, then Variables and Secrets, add a **Secret** called `ADMIN_PASSWORD`. Only you know its value.
+4. Every push to `main` deploys automatically.
 
 ## Using the editor
 Click the lock in the bottom-right corner of the footer and enter your password. From there you can:
@@ -37,4 +29,4 @@ Then press **Save changes**. Every save is also kept as a backup in R2 under `ba
 
 Keep uploads under 95 MB. An H.264 MP4 at 1920 × 804, 20 Mbps and a few seconds long is about 15 MB.
 
-To change the password, change the `ADMIN_PASSWORD` secret and redeploy. That signs out every device.
+To change the password, change the `ADMIN_PASSWORD` secret. That signs out every device.

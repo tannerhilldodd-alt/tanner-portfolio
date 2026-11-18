@@ -1,4 +1,4 @@
-import { isAuthed, json, unauthorized } from "../../lib/auth.js";
+import { isAuthed, json, unauthorized } from "../auth.js";
 
 export async function onRequestPut({ request, env }) {
   if (!(await isAuthed(request, env))) return unauthorized();

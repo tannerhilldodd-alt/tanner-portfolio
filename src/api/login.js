@@ -1,4 +1,4 @@
-import { passwordMatches, sessionCookie, json } from "../../lib/auth.js";
+import { passwordMatches, sessionCookie, json } from "../auth.js";
 
 export async function onRequestPost({ request, env }) {
   if (!env.ADMIN_PASSWORD) return json({ error: "ADMIN_PASSWORD is not set on the server" }, 500);
