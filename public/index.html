@@ -207,9 +207,12 @@ dialog.panel form{display:grid;gap:14px}
   :root{--gap:10px}
   header .inner{padding-block:16px}
   header nav{gap:16px}
-  .hero{aspect-ratio:16/10;max-height:none}
-  .hero .title{bottom:18px;right:64px}
-  .hero .snd{bottom:16px}
+  .hero{aspect-ratio:var(--ratio);min-height:0;max-height:none}
+  .hero::after{background:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0) 70%)}
+  .hero .title{left:14px;bottom:12px;right:52px}
+  .hero .title h1{font-size:clamp(22px,7vw,30px)}
+  .hero .title p{margin-top:4px;font-size:12px}
+  .hero .snd{bottom:10px;right:10px}
   .end{grid-template-columns:minmax(0,1fr)}
   .contact{justify-items:start;text-align:left}
   .social{justify-content:flex-start}
