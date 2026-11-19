@@ -25,6 +25,11 @@ Click the lock in the bottom-right corner of the footer and enter your password.
 - reorder clips
 - edit the name, bio, email, social links and "Last updated" date
 
+- add a title and details under any clip (Details button)
+- fill in an optional About section (longer bio, "worked with" list, portrait photo) in Site details
+
+The first clip on the main page is the big opening clip with your name over it; move any clip to the top to make it the opener. Visitors can click any clip to watch it full screen with sound, and use the arrow keys to step through.
+
 Then press **Save changes**. Every save is also kept as a backup in R2 under `backups/`.
 
 Keep uploads under 95 MB. An H.264 MP4 at 1920 × 804, 20 Mbps and a few seconds long is about 15 MB.

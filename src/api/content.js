@@ -13,7 +13,9 @@ export async function onRequestGet({ request, env }) {
 }
 
 const isStr = (v) => typeof v === "string";
-const okClip = (c) => c && isStr(c.src) && c.src.length < 500 && (c.poster === undefined || isStr(c.poster));
+const optStr = (v, max) => v === undefined || (isStr(v) && v.length <= max);
+const okClip = (c) =>
+  c && isStr(c.src) && c.src.length < 500 && optStr(c.poster, 500) && optStr(c.title, 120) && optStr(c.info, 160) && optStr(c.archived, 40);
 
 export async function onRequestPut({ request, env }) {
   if (!(await isAuthed(request, env))) return unauthorized();
@@ -23,6 +25,9 @@ export async function onRequestPut({ request, env }) {
   try { data = JSON.parse(text); } catch { return json({ error: "Not valid JSON" }, 400); }
   if (!data || !Array.isArray(data.clips) || !Array.isArray(data.archive) || !data.clips.every(okClip) || !data.archive.every(okClip)) {
     return json({ error: "Content is missing clips or archive" }, 400);
+  }
+  if (!optStr(data.about, 2000) || !optStr(data.worked, 600) || !optStr(data.portrait, 500)) {
+    return json({ error: "About section is too long" }, 400);
   }
   const body = JSON.stringify(data, null, 2);
   // Keep every saved version so a mistake can be rolled back.
