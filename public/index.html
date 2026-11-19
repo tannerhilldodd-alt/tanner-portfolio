@@ -223,6 +223,14 @@ dialog.panel form{display:grid;gap:14px}
   .v-meta span{display:block;margin:2px 0 0}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none}}
+/* Drag and drop (editor only) */
+.drop-hint{position:fixed;inset:14px;z-index:60;display:none;place-items:center;border:2px dashed var(--ink);border-radius:6px;background:rgba(255,255,255,.72);pointer-events:none;font-size:18px;font-weight:500;color:var(--ink);text-align:center}
+.drop-hint small{display:block;font-size:13px;font-weight:400;color:var(--mute);margin-top:6px}
+body.dragging .drop-hint{display:grid}
+body.dragging.over-clip .drop-hint{background:transparent;border-color:transparent}
+body.dragging.over-clip .drop-hint span{display:none}
+figure.drop-target{outline:3px solid var(--ink);outline-offset:-3px}
+figure.drop-target::after{content:'Drop to replace this clip';position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:rgba(255,255,255,.8);color:var(--ink);font-size:16px;font-weight:500}
 </style>
 </head>
 <body>
@@ -280,7 +288,8 @@ dialog.panel form{display:grid;gap:14px}
   <button class="btn ghost" type="button" id="b-out">Lock</button>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<input type="file" id="picker" accept="video/mp4,video/quicktime,video/*" hidden>
+<input type="file" id="picker" accept="video/mp4,video/quicktime,video/*" multiple hidden>
+<div class="drop-hint" aria-hidden="true"><span>Drop to add to the end<small>Drop onto a clip to replace it instead</small></span></div>
 <input type="file" id="pic-picker" accept="image/*" hidden>
 
 <dialog class="panel" id="login">
@@ -432,7 +441,7 @@ function render(){
   });
   if(c.clips[0]&&capEl(c.clips[0])){/* opening clip caption sits under it */const cap=capEl(c.clips[0]);cap.style.marginTop='-10px';cap.style.marginBottom='var(--gap)';hs.appendChild(cap);}
   const add=document.createElement('button');add.type='button';add.className='add';add.dataset.act='add';
-  add.innerHTML=`<span><strong>+ Add a clip</strong>MP4, 1920 × 804, a few seconds long${c.clips.length?'':'. The first clip becomes the big opening clip.'}</span>`;
+  add.innerHTML=`<span><strong>+ Add a clip</strong>Click, or drag videos anywhere onto the page. MP4, 1920 × 804, a few seconds long${c.clips.length?'':'. The first clip becomes the big opening clip.'}</span>`;
   w.appendChild(add);
 
   /* About */
@@ -702,10 +711,22 @@ function posterFrom(file){
     v.onerror=()=>fin(null);setTimeout(()=>fin(null),8000);
   });
 }
-$('picker').addEventListener('change',async()=>{
-  const file=$('picker').files[0];if(!file||!pickFor)return;
+$('picker').addEventListener('change',()=>{
+  const files=[...$('picker').files];if(!files.length||!pickFor)return;
   const job=pickFor;pickFor=null;
-  if(file.size>95*1024*1024){toast('That file is over 95 MB. Export it smaller (H.264, about 20 Mbps) and try again');return;}
+  if(job.mode==='replace')uploadOne(files[0],job);else addMany(files);
+});
+/* Upload one after another so the order matches the order dropped */
+let queue=Promise.resolve();
+function addMany(files){
+  files=files.filter(f=>/^video\//.test(f.type)||/\.(mp4|mov|m4v|webm)$/i.test(f.name));
+  if(!files.length){toast('Only video files can be added');return;}
+  files.forEach(f=>{queue=queue.then(()=>uploadOne(f,{mode:'add',fig:document.querySelector('#clips .add')}));});
+}
+async function uploadOne(file,job){
+  if(!job.fig||!job.fig.isConnected){render();job.fig=job.mode==='add'?document.querySelector('#clips .add'):document.querySelector(`figure[data-list="work"][data-idx="${job.i}"]`);}
+  if(!job.fig)return;
+  if(file.size>95*1024*1024){toast(`${file.name} is over 95 MB. Export it smaller (H.264, about 20 Mbps) and try again`);return;}
   const busy=document.createElement('div');busy.className='busy';busy.innerHTML='<span>Uploading… 0%</span><i><b></b></i>';
   if(job.mode==='replace')job.fig.appendChild(busy);else{job.fig.innerHTML='';job.fig.style.position='relative';job.fig.appendChild(busy);}
   const setP=p=>{busy.querySelector('span').textContent=`Uploading… ${Math.round(p*100)}%`;busy.querySelector('b').style.width=(p*100)+'%';};
@@ -728,7 +749,40 @@ $('picker').addEventListener('change',async()=>{
     content.updated=today();
     render();
   }catch(err){toast(err.status===401?'Your session ended. Unlock again':'Upload failed. Try again');render();}
+}
+
+/* Drag videos straight from Finder onto the page while editing */
+let dragDepth=0,dropFig=null;
+const hasFiles=e=>e.dataTransfer&&[...e.dataTransfer.types].includes('Files');
+function setDropFig(f){
+  if(dropFig===f)return;
+  if(dropFig)dropFig.classList.remove('drop-target');
+  dropFig=f;if(f)f.classList.add('drop-target');
+  document.body.classList.toggle('over-clip',!!f);
+}
+function endDrag(){dragDepth=0;document.body.classList.remove('dragging','over-clip');setDropFig(null);}
+addEventListener('dragenter',e=>{if(!editing||!hasFiles(e))return;e.preventDefault();dragDepth++;document.body.classList.add('dragging');});
+addEventListener('dragleave',e=>{if(!editing||!hasFiles(e))return;if(--dragDepth<=0)endDrag();});
+addEventListener('dragover',e=>{
+  if(!hasFiles(e))return;e.preventDefault();
+  if(!editing){e.dataTransfer.dropEffect='none';return;}
+  e.dataTransfer.dropEffect='copy';
+  setDropFig(e.target.closest&&e.target.closest('figure[data-list="work"]'));
 });
+addEventListener('drop',e=>{
+  if(!hasFiles(e))return;e.preventDefault();
+  const target=dropFig;endDrag();
+  if(!editing)return;
+  const files=[...e.dataTransfer.files];if(!files.length)return;
+  if(target){
+    const f=files.find(x=>/^video\//.test(x.type)||/\.(mp4|mov|m4v|webm)$/i.test(x.name));
+    if(!f){toast('Only video files can be added');return;}
+    const i=+target.dataset.idx;
+    queue=queue.then(()=>uploadOne(f,{mode:'replace',i,fig:target}));
+    if(files.length>1)toast('Replaced with the first video. Drop the rest on the page to add them');
+  }else addMany(files);
+});
+addEventListener('dragend',endDrag);
 
 addEventListener('beforeunload',e=>{if(editing&&isDirty()){e.preventDefault();e.returnValue='';}});
 boot();
