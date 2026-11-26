@@ -48,6 +48,8 @@ header .inner{display:flex;justify-content:space-between;align-items:baseline;ga
 header nav{display:flex;gap:24px;font-size:13px;color:var(--mute)}
 header nav a{transition:color .2s}
 header nav a:hover,header nav a[aria-current="page"]{color:var(--ink)}
+header nav .game{display:inline-flex;align-self:center}
+header nav .game svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .updated{padding-block:0 18px;font-size:12px;color:var(--mute);line-height:1.4}
 
 /* Opening clip */
@@ -240,7 +242,7 @@ figure.drop-target::after{content:'Drop to replace this clip';position:absolute;
 <a class="skip" href="#work">Skip to work</a>
 <header class="gut"><div class="inner">
   <a class="name" href="#" id="brand">Tanner Hill Dodd</a>
-  <nav aria-label="Main"><a href="#" data-view="work">Work</a><a href="#archive" data-view="archive">Archive</a><a href="#contact">Contact</a></nav>
+  <nav aria-label="Main"><a href="#" data-view="work">Work</a><a href="#archive" data-view="archive">Archive</a><a href="#contact">Contact</a><a class="game" href="/retro/" aria-label="Retro version of the site" title="Retro version"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 7.5h9a5 5 0 0 1 4.9 6l-.7 3.4a2.4 2.4 0 0 1-4.2 1l-1.9-2.4h-5.2l-1.9 2.4a2.4 2.4 0 0 1-4.2-1l-.7-3.4a5 5 0 0 1 4.9-6z"/><path d="M8 10.5v3M6.5 12h3"/><circle cx="15.5" cy="11" r=".6"/><circle cx="17" cy="13" r=".6"/></svg></a></nav>
 </div></header>
 
 <div class="gut"><div class="inner updated" id="updated">Last updated Nov 18, 2026</div></div>
