@@ -184,7 +184,7 @@ tr[aria-selected=true] .nowplaying{color:#fff}
 .win.open{display:block;animation:pop .22s cubic-bezier(.2,.8,.3,1.2)}
 @keyframes pop{from{transform:scale(.86);opacity:0}}
 .win .tb{height:22px;display:flex;align-items:center;gap:8px;padding:0 8px;cursor:move;font-size:11.5px;font-weight:700;touch-action:none}
-.win .tb span{flex:1;text-align:center;margin-right:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.win .tb span{flex:1;text-align:center;margin-right:40px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dot{width:12px;height:12px;border-radius:50%;border:1px solid #9a2b22;background:radial-gradient(circle at 50% 35%,#ffb3a8,#e0463a 60%,#b8281d);padding:0;cursor:pointer;flex:none}
 .win video{display:block;width:100%;aspect-ratio:2.39/1;background:#000;object-fit:contain}
 .win .ctl{padding:6px 10px 8px}
@@ -209,6 +209,90 @@ tr[aria-selected=true] .nowplaying{color:#fff}
 .boot b{display:block;font-size:20px;color:#fff;margin-bottom:14px;letter-spacing:-.01em}
 .boot .bar2{width:180px;height:10px;border:1px solid #555;border-radius:6px;margin:0 auto;overflow:hidden;background:#111}
 .boot .bar2 i{display:block;height:100%;width:0;background:linear-gradient(#e8e8e8,#8d8d8d);transition:width .5s}
+
+
+/* ---------- Glossy details everywhere ---------- */
+.round{position:relative;overflow:hidden}
+.round::after{content:"";position:absolute;left:12%;right:12%;top:2px;height:45%;border-radius:50% 50% 40% 40%;background:linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,0));pointer-events:none}
+:root[data-theme=dark] .round::after{background:linear-gradient(rgba(255,255,255,.28),rgba(255,255,255,0))}
+.btnp.aqua{border-color:#2a5cb8;color:#fff;background:linear-gradient(#a6cdfb 0,#5b9cf1 48%,#3d84ec 52%,#8cc0ff 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.6);text-shadow:0 1px 1px rgba(0,0,0,.25);animation:throb 1.6s ease-in-out infinite}
+@keyframes throb{50%{filter:brightness(1.12) saturate(.85)}}
+.panel{background:repeating-linear-gradient(var(--panel) 0 2px,var(--stripe) 2px 4px)}
+:root{--stripe:#f8f8f8}
+:root[data-theme=dark]{--stripe:#252525}
+/* Aqua scrollbars */
+.list::-webkit-scrollbar,.grid::-webkit-scrollbar,.panel::-webkit-scrollbar,.src::-webkit-scrollbar{width:15px;height:15px}
+.list::-webkit-scrollbar-track,.grid::-webkit-scrollbar-track,.panel::-webkit-scrollbar-track,.src::-webkit-scrollbar-track{background:linear-gradient(90deg,#cdcdcd,#f3f3f3 45%,#e4e4e4);box-shadow:inset 1px 0 2px rgba(0,0,0,.18)}
+.list::-webkit-scrollbar-thumb,.grid::-webkit-scrollbar-thumb,.panel::-webkit-scrollbar-thumb,.src::-webkit-scrollbar-thumb{border-radius:8px;border:1px solid #2a5cb8;background:linear-gradient(90deg,#2d6ddc,#76aefc 38%,#b2d6ff 52%,#4b8bf0 70%,#2f6fde)}
+:root[data-theme=dark] .list::-webkit-scrollbar-track,:root[data-theme=dark] .grid::-webkit-scrollbar-track,:root[data-theme=dark] .panel::-webkit-scrollbar-track,:root[data-theme=dark] .src::-webkit-scrollbar-track{background:linear-gradient(90deg,#1b1b1b,#2b2b2b)}
+:root[data-theme=dark] .list::-webkit-scrollbar-thumb,:root[data-theme=dark] .grid::-webkit-scrollbar-thumb,:root[data-theme=dark] .panel::-webkit-scrollbar-thumb,:root[data-theme=dark] .src::-webkit-scrollbar-thumb{border-color:#111;background:linear-gradient(90deg,#5a5f66,#9aa1aa 45%,#5d636b)}
+
+/* Traffic lights */
+.lights{display:flex;gap:8px;position:relative;z-index:1}
+.lights button,.win .tb .dot{width:13px;height:13px;border-radius:50%;padding:0;border:1px solid rgba(0,0,0,.4);cursor:pointer;flex:none;display:grid;place-items:center;box-shadow:inset 0 1px 1px rgba(255,255,255,.6),0 1px 0 rgba(255,255,255,.4)}
+.lights i,.win .tb .dot i{font:700 9px/1 var(--f);color:rgba(60,0,0,.65);opacity:0;font-style:normal}
+.lights:hover i,.win .tb:hover .dot i{opacity:1}
+.l-close,.win .tb .dot{background:radial-gradient(circle at 50% 28%,#ffd6cf 0,#f25b4d 42%,#b82518 100%)}
+.l-min{background:radial-gradient(circle at 50% 28%,#fff3c4 0,#f6bf3c 42%,#c3860a 100%)}
+.l-zoom,.win .tb .dot.z{background:radial-gradient(circle at 50% 28%,#ddf8cf 0,#5fca4c 42%,#2a8a1d 100%)}
+.win .tb{gap:7px}
+
+/* Startup screen */
+.boot{background:repeating-linear-gradient(#e7e7e7 0 2px,#f1f1f1 2px 4px);color:#444}
+.boot b{color:#1d1d1d;font-weight:700}
+.boot .badge{width:76px;height:76px;margin:0 auto 16px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(#5d9bf5,#1f57c4);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 6px 14px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.boot .badge::after{content:"";position:absolute;inset:0 0 52% 0;background:linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.08));border-radius:17px 17px 40% 40%}
+.boot .badge svg{width:44px;height:44px;fill:none;stroke:#fff;stroke-width:1.6}
+.boot .bar2{width:200px;height:12px;border:1px solid #6c8fc6;border-radius:7px;background:linear-gradient(#dcdcdc,#fbfbfb)}
+.boot .bar2 i{background:repeating-linear-gradient(-45deg,#3a7ee8 0 7px,#86baff 7px 14px);background-size:20px 100%;animation:barber .5s linear infinite;box-shadow:inset 0 1px 0 rgba(255,255,255,.6);border-radius:6px}
+@keyframes barber{to{background-position:20px 0}}
+.boot small{display:block;margin-top:10px;font-size:11px;color:#777}
+
+/* ---------- The desktop: menu bar, window, dock (wide screens only) ---------- */
+.menubar,.titlebar,.dock{display:none}
+@media (min-width:900px) and (min-height:620px) and (pointer:fine){
+  body{background:#123a7a radial-gradient(130% 100% at 15% 0,#8fc3ff 0,#3f7fd6 30%,#1d4b9e 55%,#0e2457 80%,#08163a 100%)}
+  body::before{content:"";position:fixed;inset:0;background:radial-gradient(70% 45% at 80% 85%,rgba(150,110,255,.45),transparent 70%),radial-gradient(60% 40% at 30% 70%,rgba(80,200,255,.25),transparent 70%);pointer-events:none}
+  .menubar{display:flex;position:fixed;top:0;left:0;right:0;height:22px;z-index:6000;align-items:center;padding:0 8px;background:linear-gradient(rgba(255,255,255,.93),rgba(228,228,228,.9));border-bottom:1px solid rgba(0,0,0,.38);box-shadow:0 1px 5px rgba(0,0,0,.3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#111;font-size:13px}
+  .m{position:relative;height:22px}
+  .m>button{border:0;background:none;height:22px;padding:0 10px;font-size:13px;color:#111;cursor:default;display:flex;align-items:center}
+  .m>button.app-name{font-weight:700}
+  .m>button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6}
+  .m.open>button{background:linear-gradient(#6aa0f0,#2c66d6);color:#fff}
+  .dd{display:none;position:absolute;top:22px;left:0;min-width:220px;padding:4px 0;background:rgba(245,245,245,.97);border:1px solid rgba(0,0,0,.28);border-top:0;border-radius:0 0 5px 5px;box-shadow:0 10px 28px rgba(0,0,0,.35)}
+  .m.open .dd{display:block}
+  .dd button,.dd a{display:flex;justify-content:space-between;gap:24px;width:100%;border:0;background:none;padding:2px 20px;font-size:13px;line-height:1.35;text-align:left;cursor:default;color:#111;text-decoration:none}
+  .dd button:hover,.dd a:hover,.dd button:focus-visible,.dd a:focus-visible{background:linear-gradient(#6aa0f0,#2c66d6);color:#fff;outline:none}
+  .dd button[aria-checked=true]::before{content:"✓";position:absolute;left:6px}
+  .dd button{position:relative}
+  .dd kbd{font:inherit;opacity:.55}
+  .dd hr{border:0;border-top:1px solid #d4d4d4;margin:5px 0}
+  .menubar .clock{margin-left:auto;padding:0 8px;white-space:nowrap}
+
+  .app{inset:44px 44px 100px;border-radius:7px 7px 5px 5px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.45);grid-template-rows:auto auto minmax(0,1fr) auto;transform-origin:50% 115%;transition:inset .35s cubic-bezier(.2,.8,.3,1),border-radius .35s,transform .5s cubic-bezier(.55,0,.8,.2),opacity .5s}
+  body.zoomed .app{inset:22px 0 0;border-radius:0}
+  body.mini .app{transform:translateY(40vh) scale(.06,.04);opacity:0;pointer-events:none;transition:transform .5s cubic-bezier(.55,0,.8,.2),opacity .5s .05s}
+  .titlebar{display:flex;align-items:center;height:22px;padding:0 9px;position:relative;background:linear-gradient(#f2f2f2,var(--chrome-top));color:var(--btn-ink);font-size:13px}
+  :root[data-theme=dark] .titlebar{background:linear-gradient(#5a5a5a,var(--chrome-top))}
+  .titlebar .title{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+  :root[data-theme=dark] .titlebar .title{text-shadow:none}
+  .bar{padding-top:2px}
+  .win{border-radius:7px 7px 5px 5px}
+
+  .dock{display:flex;position:fixed;left:50%;bottom:6px;transform:translateX(-50%);z-index:5500;align-items:flex-end;gap:4px;padding:0 16px 6px;height:92px}
+  .dock::before{content:"";position:absolute;left:0;right:0;bottom:0;height:38px;background:linear-gradient(rgba(255,255,255,.62),rgba(225,235,250,.3));border:1px solid rgba(255,255,255,.75);border-radius:5px;transform:perspective(260px) rotateX(42deg);transform-origin:50% 100%;box-shadow:0 -1px 0 rgba(0,0,0,.15),0 6px 18px rgba(0,0,0,.35)}
+  .dock .sep{position:relative;width:1px;height:40px;margin:0 6px 6px;background:rgba(255,255,255,.6);box-shadow:1px 0 0 rgba(0,0,0,.2)}
+  .dock .it{position:relative;width:50px;height:50px;flex:none;border:0;padding:0;background:none;cursor:pointer;display:block;text-decoration:none;transition:width .12s ease-out,height .12s ease-out}
+  .dock .ic{position:absolute;inset:0;border-radius:22%;display:grid;place-items:center;background:var(--g);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -3px 5px rgba(0,0,0,.25),0 4px 8px rgba(0,0,0,.45);overflow:hidden}
+  .dock .ic::after{content:"";position:absolute;inset:0 0 52% 0;background:linear-gradient(rgba(255,255,255,.62),rgba(255,255,255,.06));border-radius:22% 22% 45% 45%/22% 22% 30% 30%}
+  .dock .ic svg{width:58%;height:58%;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+  .dock .tip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);background:rgba(20,20,20,.78);color:#fff;font-size:12.5px;padding:2px 11px;border-radius:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .12s}
+  .dock .it:hover .tip,.dock .it:focus-visible .tip{opacity:1}
+  .dock .run{position:absolute;bottom:-6px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:radial-gradient(#fff,#a9dbff);box-shadow:0 0 5px 1px rgba(160,215,255,.9)}
+  .dock .it.bounce{animation:bounce .55s ease-out 2}
+  @keyframes bounce{40%{transform:translateY(-22px)}}
+}
+@media (prefers-reduced-motion:reduce){.app{transition:none!important}.dock .it{transition:none}.dock .it.bounce{animation:none}.boot .bar2 i,.btnp.aqua{animation:none}}
 
 /* ---------- Phones ---------- */
 .mtabs{display:none}
@@ -249,9 +333,26 @@ tr[aria-selected=true] .nowplaying{color:#fff}
 </style>
 </head>
 <body>
-<div class="boot" id="boot"><div><b id="boot-name">Tanner Hill Dodd</b><div class="bar2"><i id="boot-bar"></i></div></div></div>
+<div class="boot" id="boot"><div><div class="badge"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/><circle cx="8" cy="12" r="2.2"/></svg></div><b id="boot-name">Tanner Hill Dodd</b><div class="bar2"><i id="boot-bar"></i></div><small>Starting up…</small></div></div>
 
+<div class="menubar" id="menubar" role="menubar">
+  <div class="m"><button type="button" aria-label="Tanner Hill Dodd menu"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></button><div class="dd">
+    <button type="button" data-do="go:bio">About Tanner Hill Dodd</button><button type="button" data-do="go:contact">Contact…</button><hr><a href="/" data-exit>Exit to Main Site</a></div></div>
+  <div class="m"><button type="button" class="app-name" id="mb-name">Tanner Hill Dodd</button><div class="dd">
+    <button type="button" data-do="go:bio">About This Library</button><button type="button" data-do="theme">Dark Mode <kbd>⌘D</kbd></button><hr><a href="/" data-exit>Quit <kbd>⌘Q</kbd></a></div></div>
+  <div class="m"><button type="button">File</button><div class="dd">
+    <button type="button" data-do="open">Open Clip in Player <kbd>⌘O</kbd></button><button type="button" data-do="closewin">Close Player <kbd>⌘W</kbd></button><hr><button type="button" data-do="copymail">Copy Email Address</button></div></div>
+  <div class="m"><button type="button">View</button><div class="dd">
+    <button type="button" data-do="view:list" role="menuitemradio">as List</button><button type="button" data-do="view:grid" role="menuitemradio">as Grid</button><button type="button" data-do="view:flow" role="menuitemradio">as Cover Flow</button><hr><button type="button" data-do="theme" role="menuitemcheckbox" id="mi-dark">Dark Mode</button><button type="button" data-do="zoom">Zoom Window</button></div></div>
+  <div class="m"><button type="button">Controls</button><div class="dd">
+    <button type="button" data-do="play">Play / Pause <kbd>Space</kbd></button><button type="button" data-do="next">Next <kbd>→</kbd></button><button type="button" data-do="prev">Previous <kbd>←</kbd></button><hr><button type="button" data-do="volup">Volume Up</button><button type="button" data-do="voldown">Volume Down</button></div></div>
+  <div class="m"><button type="button">Go</button><div class="dd" id="mb-go"></div></div>
+  <div class="m"><button type="button">Help</button><div class="dd">
+    <button type="button" data-do="help">How to Use This Library</button><button type="button" data-do="go:contact">Get in Touch</button></div></div>
+  <span class="clock" id="clock"></span>
+</div>
 <div class="app" id="app">
+  <div class="titlebar"><div class="lights"><button class="l-close" id="w-close" type="button" aria-label="Close and go to the main site"><i>×</i></button><button class="l-min" id="w-min" type="button" aria-label="Minimize to the dock"><i>−</i></button><button class="l-zoom" id="w-zoom" type="button" aria-label="Zoom window"><i>+</i></button></div><div class="title" id="win-title">Tanner Hill Dodd</div></div>
   <div class="bar">
     <div>
       <div class="transport">
@@ -313,8 +414,18 @@ tr[aria-selected=true] .nowplaying{color:#fff}
   </div>
 </div>
 
+
+<nav class="dock" id="dock" aria-label="Dock">
+  <button class="it" type="button" data-do="restore" id="dk-lib"><span class="ic" style="--g:linear-gradient(#6fb0ff,#1f5fd0)"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M7 5v14M17 5v14M3 9h4M3 15h4M17 9h4M17 15h4"/></svg></span><span class="tip">Library</span><span class="run"></span></button>
+  <button class="it" type="button" data-do="go:bio"><span class="ic" style="--g:linear-gradient(#b9c2cc,#5f6b78)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></span><span class="tip">Bio</span></button>
+  <button class="it" type="button" data-do="go:contact"><span class="ic" style="--g:linear-gradient(#8fd3ff,#2b8fe0)"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="1.5"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg></span><span class="tip">Contact</span></button>
+  <button class="it" type="button" data-do="theme"><span class="ic" style="--g:linear-gradient(#5a6170,#1d2029)"><svg viewBox="0 0 24 24"><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/></svg></span><span class="tip">Dark Mode</span></button>
+  <span class="sep"></span>
+  <span id="dk-links" style="display:contents"></span>
+  <a class="it" href="/" data-exit><span class="ic" style="--g:linear-gradient(#f2f2f2,#9aa3ad)"><svg viewBox="0 0 24 24" style="stroke:#2b3440"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17M12 3.5c-2.5 2.6-2.5 14.4 0 17"/></svg></span><span class="tip">Main Site</span></a>
+</nav>
 <div class="win" id="win" role="dialog" aria-label="Player">
-  <div class="tb" id="win-tb"><button class="dot" id="win-x" type="button" aria-label="Close player"></button><span id="win-t"></span></div>
+  <div class="tb" id="win-tb"><button class="dot" id="win-x" type="button" aria-label="Close player"><i>×</i></button><button class="dot z" id="win-z" type="button" aria-label="Full screen"><i>+</i></button><span id="win-t"></span></div>
   <video id="wv" playsinline preload="metadata"></video>
   <div class="ctl">
     <div class="row1"><span id="w-a">0:00</span><input type="range" id="w-seek" min="0" max="1000" value="0" aria-label="Seek"><span id="w-b">-0:00</span></div>
@@ -661,7 +772,7 @@ function renderPanel(){
   if(source==='bio'){
     body=`<dl><dt>Name</dt><dd>${esc(nm)}</dd>${C.bio1?`<dt>Studies</dt><dd>${esc(C.bio1)}</dd>`:''}${C.bio2?`<dt>Where</dt><dd>${esc(C.bio2)}</dd>`:''}<dt>Library</dt><dd>${all.filter(c=>c.sec!=='Archive').length} clips on the main page${all.some(c=>c.sec==='Archive')?`, ${all.filter(c=>c.sec==='Archive').length} in the archive`:''}</dd>${C.updated?`<dt>Last updated</dt><dd>${esc(C.updated)}</dd>`:''}${C.worked?`<dt>Worked with</dt><dd>${esc(C.worked)}</dd>`:''}</dl>${C.about?`<div class="about">${esc(C.about)}</div>`:''}`;
   }else{
-    body=`<dl>${C.email?`<dt>Email</dt><dd><a href="mailto:${esc(C.email)}">${esc(C.email)}</a><button class="btnp" type="button" id="cp">Copy</button></dd>`:''}${links.map(([l,u])=>`<dt>${l}</dt><dd><a href="${esc(u)}" target="_blank" rel="noopener">${esc(l==='LinkedIn'?'Tanner Dodd':handle(u))}</a></dd>`).join('')}${C.bio2?`<dt>Based in</dt><dd>${esc(C.bio2)}</dd>`:''}</dl>`;
+    body=`<dl>${C.email?`<dt>Email</dt><dd><a href="mailto:${esc(C.email)}">${esc(C.email)}</a><button class="btnp aqua" type="button" id="cp">Copy</button></dd>`:''}${links.map(([l,u])=>`<dt>${l}</dt><dd><a href="${esc(u)}" target="_blank" rel="noopener">${esc(l==='LinkedIn'?'Tanner Dodd':handle(u))}</a></dd>`).join('')}${C.bio2?`<dt>Based in</dt><dd>${esc(C.bio2)}</dd>`:''}</dl>`;
   }
   $('panel').innerHTML=`<div class="card">${head}${body}</div>`;
   const cp=$('cp');if(cp)cp.onclick=async()=>{try{await navigator.clipboard.writeText(C.email);cp.textContent='Copied';}catch{cp.textContent='Press and hold to copy';}};
@@ -685,7 +796,84 @@ addEventListener('keydown',e=>{
   else if(e.key==='Escape'&&win.classList.contains('open'))closeWin();
 });
 
-load();
+/* ---------- Desktop: menu bar, traffic lights, dock ---------- */
+const exitHref=document.querySelector('.exit').getAttribute('href');
+document.querySelectorAll('[data-exit]').forEach(a=>{a.setAttribute('href',exitHref);const t=document.querySelector('.exit').getAttribute('target');if(t){a.target=t;a.rel='noopener';}});
+$('win-z').onclick=()=>$('w-fs').click();
+function nudgeVol(d){const v=Math.max(0,Math.min(1,+$('vol').value+d));$('vol').value=v;$('vol').oninput({target:$('vol')});}
+function doAct(a){
+  const [k,arg]=a.split(':');
+  if(k==='go'){restore();setSource(arg);}
+  else if(k==='view'){restore();const b=document.querySelector(`.seg button[data-v="${arg}"]`);if(b)b.click();}
+  else if(k==='theme')$('theme').click();
+  else if(k==='open')openWin(cur);
+  else if(k==='closewin')closeWin();
+  else if(k==='copymail'){try{navigator.clipboard.writeText(C.email||'');}catch{}}
+  else if(k==='zoom')toggleZoom();
+  else if(k==='play')$('play').click();
+  else if(k==='next')next();
+  else if(k==='prev')prev();
+  else if(k==='volup')nudgeVol(.1);
+  else if(k==='voldown')nudgeVol(-.1);
+  else if(k==='restore')restore(true);
+  else if(k==='help'){restore();$('hint').style.opacity=1;setTimeout(()=>$('hint').style.opacity=0,4000);}
+  else if(k==='url'){window.open(arg+(a.slice(k.length+arg.length+1)),'_blank','noopener');}
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-do]');if(!t)return;
+  closeMenus();doAct(t.dataset.do);
+});
+/* menus open on click, then follow the pointer across the bar */
+const menus=[...document.querySelectorAll('.m')];
+function closeMenus(){menus.forEach(m=>m.classList.remove('open'));}
+menus.forEach(m=>{
+  const b=m.firstElementChild;
+  b.addEventListener('mousedown',e=>{e.preventDefault();const was=m.classList.contains('open');closeMenus();if(!was){m.classList.add('open');syncChecks();}});
+  b.addEventListener('mouseenter',()=>{if(menus.some(x=>x.classList.contains('open'))&&!m.classList.contains('open')){closeMenus();m.classList.add('open');syncChecks();}});
+  b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '||e.key==='ArrowDown'){e.preventDefault();closeMenus();m.classList.add('open');syncChecks();const f=m.querySelector('.dd button,.dd a');if(f)f.focus();}});
+});
+document.addEventListener('mousedown',e=>{if(!e.target.closest('.m'))closeMenus();});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeMenus();});
+function syncChecks(){
+  document.querySelectorAll('[data-do^="view:"]').forEach(b=>b.setAttribute('aria-checked',b.dataset.do==='view:'+view&&source!=='bio'&&source!=='contact'));
+  $('mi-dark').setAttribute('aria-checked',document.documentElement.dataset.theme==='dark');
+}
+function buildGo(){
+  const s=C.socials||{},hasArch=(C.archive||[]).length>0;
+  $('mb-go').innerHTML=[['featured','Featured Work'],['all','All Clips'],...(hasArch?[['archive','Archive']]:[]),['recent','Recently Added']].map(([k,l])=>`<button type="button" data-do="go:${k}">${l}</button>`).join('')+'<hr>'+[['Instagram',s.instagram],['TikTok',s.tiktok],['LinkedIn',s.linkedin]].filter(x=>x[1]).map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${l}</a>`).join('');
+  const icons={Instagram:['linear-gradient(#ffb86b,#e0407a 55%,#7a3fd0)','<rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><path d="M16.8 7.2h.01"/>'],TikTok:['linear-gradient(#4a4a4a,#0b0b0b)','<path d="M13 4v10.5a3 3 0 1 1-3-3M13 4c.5 2.4 2.2 4 4.5 4.2"/>'],LinkedIn:['linear-gradient(#5aa0e8,#1a5fa8)','<rect x="4" y="8" width="16" height="11" rx="1.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8M4 13h16"/>']};
+  $('dk-links').innerHTML=[['Instagram',s.instagram],['TikTok',s.tiktok],['LinkedIn',s.linkedin]].filter(x=>x[1]).map(([l,u])=>`<a class="it" href="${esc(u)}" target="_blank" rel="noopener"><span class="ic" style="--g:${icons[l][0]}"><svg viewBox="0 0 24 24">${icons[l][1]}</svg></span><span class="tip">${l}</span></a>`).join('');
+  $('mb-name').textContent=C.name||'Tanner Hill Dodd';$('win-title').textContent=C.name||'Tanner Hill Dodd';
+  bindDock();
+}
+/* traffic lights */
+function toggleZoom(){document.body.classList.toggle('zoomed');store.set('retro-zoom',document.body.classList.contains('zoomed')?'1':'');setTimeout(layoutFlow,380);}
+function restore(bounce){
+  if(!document.body.classList.contains('mini')){if(bounce){const d=$('dk-lib');d.classList.remove('bounce');void d.offsetWidth;d.classList.add('bounce');}return;}
+  document.body.classList.remove('mini');setTimeout(layoutFlow,520);
+}
+$('w-close').onclick=()=>{location.href=exitHref;};
+$('w-min').onclick=()=>{if(playing&&playing.el)playing.el.pause();document.body.classList.add('mini');};
+$('w-zoom').onclick=toggleZoom;
+$('win-title').parentElement.addEventListener('dblclick',e=>{if(!e.target.closest('.lights'))toggleZoom();});
+if(store.get('retro-zoom'))document.body.classList.add('zoomed');
+/* dock magnification */
+function bindDock(){
+  const dock=$('dock'),its=[...dock.querySelectorAll('.it')];const base=50,max=78,reach=130;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  dock.onmousemove=e=>{if(reduce)return;its.forEach(it=>{const r=it.getBoundingClientRect();const d=Math.abs(e.clientX-(r.left+r.width/2));const sz=base+(max-base)*Math.max(0,Math.cos(Math.min(d/reach,1)*Math.PI/2));it.style.width=it.style.height=sz+'px';});};
+  dock.onmouseleave=()=>its.forEach(it=>it.style.width=it.style.height='');
+}
+/* clock */
+function tick(){const d=new Date();$('clock').textContent=d.toLocaleDateString(undefined,{weekday:'short'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});}
+tick();setInterval(tick,15000);
+/* keyboard shortcuts like the menus say */
+addEventListener('keydown',e=>{
+  if(!(e.metaKey||e.ctrlKey))return;const k=e.key.toLowerCase();
+  if(k==='o'){e.preventDefault();openWin(cur);}else if(k==='d'){e.preventDefault();$('theme').click();}
+});
+
+load().then(buildGo);
 })();
 </script>
 </body>
